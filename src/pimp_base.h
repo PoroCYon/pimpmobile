@@ -6,6 +6,7 @@
 #ifndef PIMP_BASE_H
 #define PIMP_BASE_H
 
+#ifndef _gba_types_h_
 #ifndef PIMP_DONT_DECLARE_BASIC_TYPES
 typedef   signed char      s8;
 typedef unsigned char      u8;
@@ -16,6 +17,7 @@ typedef unsigned int       u32;
 #endif
 typedef   signed long long s64;
 typedef unsigned long long u64;
+#endif
 
 #include <stddef.h>
 typedef size_t    pimp_size_t;

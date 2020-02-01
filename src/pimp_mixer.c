@@ -3,6 +3,10 @@
  * For conditions of distribution and use, see copyright notice in LICENSE.TXT
  */
 
+#ifdef TARGET_GBA
+#include <gba.h>
+#endif
+
 #include "pimp_mixer.h"
 #include "pimp_debug.h"
 
@@ -51,21 +55,22 @@ PURE int pimp_calc_loop_event(int event_cursor, int event_delta, const int max_s
 		int denom = event_delta;
 		
 		/* call BIOS-function to divide, as it's fast enough for our needs. */
-		asm (
-			"mov r0, %[number] \n"
-			"mov r1, %[denom]  \n"
-#ifdef __thumb__
-			"swi 0x6           \n"
-#else
-			"swi 0x6 << 16     \n"
-#endif
-			"mov %[result], r0 \n"
-			: [result] "=r" (result) /* output */
-			: /* inputs */
-				[number] "r" (number),
-				[denom] "r" (denom)
-			: "r0", "r1", "r2", "r3" /* clobbers */
-		);
+		result = Div(number, denom);
+//		asm (
+//			"mov r0, %[number] \n"
+//			"mov r1, %[denom]  \n"
+//#ifdef __thumb__
+//			"swi 0x6           \n"
+//#else
+//			"swi 0x6 << 16     \n"
+//#endif
+//			"mov %[result], r0 \n"
+//			: [result] "=r" (result) /* output */
+//			: /* inputs */
+//				[number] "r" (number),
+//				[denom] "r" (denom)
+//			: "r0", "r1", "r2", "r3" /* clobbers */
+//		);
 	}
 #else
 	result = (event_cursor + event_delta - 1) / event_delta;
